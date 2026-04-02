@@ -1,6 +1,8 @@
 ---
-name: writeragent_integration
+name: libreoffice-mcp
 description: Connect AI Agents (like Hermes) to WriterAgent in LibreOffice so it can read/edit/save real documents (Writer, Calc, Draw).
+author: KeithCu  
+version: 0.7.2
 ---
 
 # Connect AI Agents (like Hermes) to WriterAgent

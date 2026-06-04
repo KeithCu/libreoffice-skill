@@ -61,4 +61,4 @@ Once you've configured Hermes:
 If you want to make this skill even more discoverable for users who might not be browsing the `writeragent` codebase, consider these distribution venues:
 
 - **Community Forums / Subreddits:** Since this is based on the open standard format, `SKILL.md` is simply Markdown. You can easily publish this file as a **GitHub Gist** and share the raw link in tutorials across AI tool communities (e.g., on Reddit `/r/LocalLLaMA` or the Nous Research discord). Users can download the gist directly.
-- **A Dedicated Mirror Repository:** If you find pointing users to a subfolder (`/tree/master/contrib/...`) is causing friction, you could spin up a lightweight, automated mirror repo (e.g., `KeithCu/writeragent-skill`) containing just this folder's contents.
+- **A Dedicated Mirror Repository:** The dedicated mirror at https://github.com/KeithCu/libreoffice-skill is the recommended home for easy raw URL consumption and agent skill registries. The content is also developed in the main WriterAgent tree under `libreoffice-skill-repo/`.

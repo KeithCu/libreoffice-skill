@@ -7,6 +7,10 @@ version: 0.7.2
 
 # Connect AI Agents (like Hermes) to WriterAgent
 
+**Dedicated skill repo (for easy consumption):** https://github.com/KeithCu/libreoffice-skill
+
+This SKILL.md is also maintained in the main WriterAgent tree under `libreoffice-skill-repo/`.
+
 This skill connects AI Agents to LibreOffice via the WriterAgent MCP server, giving them the ability to natively read, edit, analyze, and save real documents (Writer documents, Calc spreadsheets, and Draw presentations).
 
 ## 1. Prerequisites & Setup
@@ -58,7 +62,24 @@ Once connected, you can ask Hermes to perform powerful tasks directly within Lib
 - **Approving Tool Calls (HITL):** It is highly recommended to leave Human-in-the-Loop (HITL) approval *on* for actions that modify your documents. This ensures Hermes asks for permission before writing changes or saving files.
 - **Port Conflicts:** If `8765` is in use, change the port in the WriterAgent settings, then update your Hermes configuration to match.
 - **Reloading the MCP:** If you restart LibreOffice or change WriterAgent settings, you may need to reload the MCP tools in Hermes. Use the `/reload-mcp` command.
-- **Document Targeting:** Actions typically target the *active* foreground document in LibreOffice. 
+- **Document Targeting (modern way):** The MCP tools accept a `document_url` parameter **directly in the tool call arguments**. This is the recommended approach for multi-file or cross-document work and does not require the `X-Document-URL` HTTP header.
+
+  Example tool call payload (conceptual):
+  ```json
+  {
+    "name": "apply_document_content",
+    "arguments": {
+      "document_url": "file:///absolute/path/to/report.odt",
+      "content": "...",
+      "target": "end"
+    }
+  }
+  ```
+
+  - Use the `list_open_documents` tool first (MCP-only) to discover open documents and their exact `document_url` values (especially useful with multiple files open or when focus might be ambiguous).
+  - The older `X-Document-URL` header is still supported for simple "active document" cases and backward compatibility, but prefer the argument form.
+  - For delegation tools (`delegate_to_specialized_*_toolset`), you can also pass `document_url` so the inner agent works against the intended document.
+  - See the full details and schemas in the WriterAgent project's `docs/mcp-protocol.md`.
 
 ## 6. Bonus: Agent Control Protocol (ACP) Mode
 
